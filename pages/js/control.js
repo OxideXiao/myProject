@@ -25,6 +25,16 @@ var pageController = (function(){
 	
 	var pageSwitch = function(){
 		
+		Pace.on('done',function(){
+			$('.bb-ld .des-en-ld').html('finished');
+			$('.bb-ld .des-ch-ld').html('读取完成');
+			setTimeout(function(){
+				$('.cover-ld').hide();
+				$('.entryPage').show();
+			},500)
+			
+		});
+		
 		$('.entryPage .btn-ep').on('click',function(){
 			$(this).closest('.loadingBox').hide();
 			$('.cartoonBox').show();
@@ -72,6 +82,31 @@ var pageController = (function(){
 				$('.moreEvent-icon').css('position','absolute')
 			}
 		});
+	    //for lastPage
+		touch.on('.dsWindow #endResult .container','swiperight',function(){
+			var ml = $('.dsWrapper').css('marginLeft');
+			ml = parseInt(ml) + wth;
+			$('.dsWrapper').animate({marginLeft:ml},300);
+			index-=1;
+			$('.moreEvent-icon').css('position','absolute');
+		});
+		//for discountPage
+		touch.on('.dsWindow #endResult .discountList','swiperight',function(){
+			var $obj = $('.dsWindow #endResult .discountList');
+			$obj.animate({marginLeft:wth},300);
+			$('.dsWrapper').css('height','auto')
+			setTimeout(function(){
+				$obj.hide().css('marginLeft','0px');
+			},300);
+		});
+		//for doctorsPage
+		touch.on('.dsWindow #endResult .doctorsList','swiperight',function(){
+			var $obj = $('.dsWindow #endResult .doctorsList');
+			$obj.animate({marginLeft:wth},300);
+			setTimeout(function(){
+				$obj.hide().css('marginLeft','0px');
+			},300);
+		});
 		
 		return this;
 	}
@@ -84,6 +119,7 @@ var pageController = (function(){
 			window.removeEventListener('deviceorientation',setInit);
 			window.addEventListener('deviceorientation',makeMove);
 		}
+		
 		var makeMove = function(e){
 			$('#con').html('sl:'+scrollLength/80+"::intiP:"+initP+"::"+(e.beta-initP));
 				
@@ -145,10 +181,13 @@ var pageController = (function(){
 		});
 		//btnBox
 		$('.btnBox .discount').on('click',function(){
-			$('.discountList').show();
+			$('.discountList').css('marginLeft',wth+'px').show()
+			.animate({marginLeft:0},300);
+			$('.dsWrapper').css('height',parseInt($('.discountList').css('height'))+0.1*wth)
 		});
 		$('.btnBox .doctors').on('click',function(){
-			$('.doctorsList').show();
+			$('.doctorsList').css('marginLeft',wth+'px').show()
+			.animate({marginLeft:0},300);
 		});
 		$('.btnBox .gift').on('click',function(){
 			$('.giftsQuering').show();
@@ -173,7 +212,6 @@ var pageController = (function(){
 		$('.discountList').on('click',function(e){
 			if ($(e.target).hasClass('discountTicket')){
 				var idx = $(e.target).index();
-				$(this).hide();
 				$('.dsQuering').show()
 				.children('.dsT').eq(idx).show().siblings().hide();
 			}						
@@ -275,10 +313,15 @@ var pageController = (function(){
 		var val;
 		
 		for (x in args){
-			val = $fm.find('input[name='+args[x]+']').val();
-			if (!this.inputCheck[''+args[x]+'Check'](val)){
-				return false;
+			if (this.inputCheck[''+args[x]+'Check']){
+				val = $fm.find('input[name='+args[x]+']').val();
+				if (!this.inputCheck[''+args[x]+'Check'](val)){
+					return false;
+				}
+			}else{
+				console.log('inputCheckControl: the checking method '+args[x]+'Check is not exsit');
 			}
+			
 		}
 		return true;
 	}

@@ -1,6 +1,7 @@
 body,html{height:100%;}
-
 .db{display:block;}
+
+.pace .pace-progress{top:100vw;right:25vw;}
 
 .page{position:relative;}
 .page .bgI{width:100%;position:relative;z-index:1;}
@@ -9,7 +10,14 @@ body,html{height:100%;}
 
 .content{height:100%;}
 .loadingBox{height:100%;}
-.entryPage{width:100%;height:100%;background:url(../images/repeat-bg.jpg);}
+.cover-ld{width:100%;height:100%;position:relative;z-index:99;background:url(../images/repeat-bg.jpg);}
+.headImg-ld{width:48.73vw;margin:0 auto;padding-top:25vw;}
+.progress-ld{font-size:15vw;text-align:center;}
+.bb-ld{position:absolute;bottom:17vw;width:100%;}
+.des-en-ld{font-size:4.7vw;text-align:center;margin-top:8.4vw;}
+.des-ch-ld{font-size:4vw;text-align:center;margin-top:.3em;}
+
+.entryPage{width:100%;height:100%;background:url(../images/repeat-bg.jpg);display:none;}
 .entryPage .title-ep{width:89vw;position:relative;margin:0 auto;padding-top:12vw;}
 .entryPage .mocha-ep{width:36vw;position:relative;margin:9.3vw auto;}
 .entryPage .btn-ep{width:50vw;position:absolute;left:0;right:0;margin:0 auto;bottom:8vw;}
